@@ -68,106 +68,153 @@
     <div style="width:250px; margin-right: auto; margin-left: auto;" >
         <h1><span class="icon-cloud"></span> Installer</h1>
         <p>Simple Github Deployment System</p>
-        <p><button class="btn btn-inverse" rel="tooltip" data-original-title="Realtime view of deployment logging." data-placement="right">View Console</button></p>
+        <p><button id="console_btn" class="btn btn-inverse" rel="tooltip" data-original-title="Realtime view of deployment logging." data-placement="right" onclick="toggleConsole();">Toogle Console</button></p>
 
         <p>&nbsp;</p>
     </div>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div id="tool_pane" class="span12">
 
-    <div id="myCarousel" class="carousel slide">
-        <!-- Carousel items -->
-        <div class="carousel-inner" data-interval="false">
-            <!-- STEP #1 -->
-            <div id="step1" class="active item">
-                <form class="form-signin">
-                    <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Select an Organization</h3>
-                    <p>The entire organization is deployed, not just individual repositories.</p>
-                    <p></p>
-                    <div class="alert" id="step1_other_alert" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Coming Soon!<br/></strong> Pick from the list provided.
+
+                <div id="myCarousel" class="carousel slide">
+                    <!-- Carousel items -->
+                    <div class="carousel-inner" data-interval="false">
+                        <!-- STEP #1 -->
+                        <div id="step1" class="active item">
+                            <form class="form-signin">
+                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Select an Organization</h3>
+                                <p>The entire organization is deployed, not just individual repositories.</p>
+                                <p></p>
+                                <div class="alert" id="step1_other_alert" style="display:none;">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong>Coming Soon!<br/></strong> Pick from the list provided.
+                                </div>
+                                <div class="alert" id="step2_other_alert" style="display:none;">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong>Error!<br/></strong> Pick an Organization first!
+                                </div>
+
+                                <div class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
+                                    <button class="btn">ADP-Credit</button>
+                                    <button class="btn">ADP-CV</button>
+                                    <button class="btn">Deployment-Test</button>
+                                    <button class="btn" onclick="$('#step1_other_alert').fadeIn();">Other...</button>
+                                </div>
+                                <p>&nbsp;</p>
+                                <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(1,2);">Next <span class="icon-circle-arrow-right"></span></button>
+                            </form>
+                        </div>
+                        <!-- STEP #2 -->
+                        <div id="step2" class="item">
+                            <form class="form-signin">
+                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Create Build Tag?</h3>
+                                <p>Installer will tag every repositories in the organization with a build tag (e.g. v1.23).</p>
+                                <p></p>
+
+                                <p>&nbsp;</p>
+                                <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(2,3);" rel="tooltip" data-original-title="The next build number is: v5.156" data-placement="left">Yes</button>&nbsp;
+                                <button class="btn btn-large btn-primary" type="submit" rel="tooltip" data-original-title="Don't Worry, if you say no, you can an existing build number." data-placement="right">&nbsp;No&nbsp;</button>
+                            </form>
+                        </div>
+                        <!-- STEP #3 -->
+                        <div id="step3" class="item">
+                            <form class="form-signin">
+                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Tagging Organization</h3>
+                                <p>Please wait while we tag all repositories in <span class="label label-inverse">ADP-Credit</span> with <span class="label label-inverse">v5.197</span></p>
+                                <p></p>
+
+                                <div class="progress progress-striped active">
+                                    <div class="bar" style="width: 40%;"></div>
+                                </div>
+
+                                <p>&nbsp;</p>
+                                <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(3,4);">Next <span class="icon-circle-arrow-right"></span></button>
+                            </form>
+                        </div>
+                        <!-- STEP #4 -->
+                        <div id="step4" class="item">
+                            <form class="form-signin">
+                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Deploy to?</h3>
+                                <p>Select an environment, the repositories will be rsynced to the environment. An environment may be one or many servers. Including web and database servers.</p>
+                                <p></p>
+
+                                <div class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
+                                    <button class="btn">qa</button>
+                                    <button class="btn">staging</button>
+                                    <button class="btn disabled" rel="tooltip" data-original-title="Insufficient permissions." data-placement="left">production</button>
+                                    <button class="btn btn-info">Other...</button>
+                                </div>
+                                <p>&nbsp;</p>
+                                <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(4,5);">Next <span class="icon-circle-arrow-right"></span></button>
+                            </form>
+                        </div>
+                        <!-- STEP #5 -->
+                        <div id="step5" class="item">
+                            <form class="form-signin">
+                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Deploying Organization </h3>
+                                <p>Please wait while we Deploy the build of <span class="label label-inverse">ADP-Credit</span> to <span class="label label-inverse">Production</span></p>
+                                <p></p>
+
+                                <div class="progress progress-striped active">
+                                    <div class="bar" style="width: 40%;"></div>
+                                </div>
+
+                                <p>&nbsp;</p>
+                                <button class="btn btn-large btn-success" type="submit" onclick="$('#myCarousel').carousel(0);">Start Over <span class="icon-share-alt"></span> </button>
+                                <button class="btn btn-large btn-danger" type="submit">Exit <span class="icon-off"></span> </button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="alert" id="step2_other_alert" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Error!<br/></strong> Pick an Organization first!
-                    </div>
+                </div>
 
-                    <div class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
-                        <button class="btn">ADP-Credit</button>
-                        <button class="btn">ADP-CV</button>
-                        <button class="btn">Deployment-Test</button>
-                        <button class="btn" onclick="$('#step1_other_alert').fadeIn();">Other...</button>
-                    </div>
-                    <p>&nbsp;</p>
-                    <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(1,2);">Next <span class="icon-circle-arrow-right"></span></button>
-                </form>
-            </div>
-            <!-- STEP #2 -->
-            <div id="step2" class="item">
-                <form class="form-signin">
-                    <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Create Build Tag?</h3>
-                    <p>Installer will tag every repositories in the organization with a build tag (e.g. v1.23).</p>
-                    <p></p>
-
-                    <p>&nbsp;</p>
-                    <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(2,3);" rel="tooltip" data-original-title="The next build number is: v5.156" data-placement="left">Yes</button>&nbsp;
-                    <button class="btn btn-large btn-primary" type="submit" rel="tooltip" data-original-title="Don't Worry, if you say no, you can an existing build number." data-placement="right">&nbsp;No&nbsp;</button>
-                </form>
-            </div>
-            <!-- STEP #3 -->
-            <div id="step3" class="item">
-                <form class="form-signin">
-                    <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Tagging Organization</h3>
-                    <p>Please wait while we tag all repositories in <span class="label label-inverse">ADP-Credit</span> with <span class="label label-inverse">v5.197</span></p>
-                    <p></p>
-
-                    <div class="progress progress-striped active">
-                        <div class="bar" style="width: 40%;"></div>
-                    </div>
-
-                    <p>&nbsp;</p>
-                    <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(3,4);">Next <span class="icon-circle-arrow-right"></span></button>
-                </form>
-            </div>
-            <!-- STEP #4 -->
-            <div id="step4" class="item">
-                <form class="form-signin">
-                    <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Deploy to?</h3>
-                    <p>Select an environment, the repositories will be rsynced to the environment. An environment may be one or many servers. Including web and database servers.</p>
-                    <p></p>
-
-                    <div class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
-                        <button class="btn">qa</button>
-                        <button class="btn">staging</button>
-                        <button class="btn disabled" rel="tooltip" data-original-title="Insufficient permissions." data-placement="left">production</button>
-                        <button class="btn btn-info">Other...</button>
-                    </div>
-                    <p>&nbsp;</p>
-                    <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(4,5);">Next <span class="icon-circle-arrow-right"></span></button>
-                </form>
-            </div>
-            <!-- STEP #5 -->
-            <div id="step5" class="item">
-                <form class="form-signin">
-                    <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Deploying Organization </h3>
-                    <p>Please wait while we Deploy the build of <span class="label label-inverse">ADP-Credit</span> to <span class="label label-inverse">Production</span></p>
-                    <p></p>
-
-                    <div class="progress progress-striped active">
-                        <div class="bar" style="width: 40%;"></div>
-                    </div>
-
-                    <p>&nbsp;</p>
-                    <button class="btn btn-large btn-success" type="submit" onclick="$('#myCarousel').carousel(0);">Start Over <span class="icon-share-alt"></span> </button>
-                    <button class="btn btn-large btn-danger" type="submit">Exit <span class="icon-off"></span> </button>
-                </form>
+        </div>
+        <div id="console_pane" style="display: none; overflow: none;">
+            <div class="well well-large" style="background-color: black; color: white; font-size: 11px; max-height: 355px; overflow: hidden;">
+                [2012 +100202] DBChangeset: Loadding..
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 531 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 535 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 531 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 535 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 531 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 535 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 531 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 535 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 531 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 535 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 531 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:21 -0500] "GET /robots.txt HTTP/1.1" 404 535 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:22 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
+                95.108.150.235 - - [18/Nov/2012:01:18:23 -0500] "GET / HTTP/1.1" 200 429 "-"<br/>
             </div>
         </div>
     </div>
+</div>
 
 
-
-
-</div> <!-- /container -->
 
 <!-- Le javascript
 ================================================== -->
@@ -184,6 +231,32 @@
 <script type="text/javascript">
     function wizard_step(from, to){
         $('#myCarousel').carousel('next');
+    }
+
+    function toggleConsole(){
+        if($('#console_btn').html() == "Hide Console"){
+            $('#tool_pane').removeClass('span4');
+            $('#tool_pane').addClass('span11');
+
+            $('#console_pane').hide();
+
+            $('#console_btn').removeClass('btn-danger');
+            $('#console_btn').addClass('btn-inverse');
+
+            $('#console_btn').html('Show Console');
+        }else{
+           $('#tool_pane').removeClass('span11');
+           $('#tool_pane').addClass('span4');
+
+           $('#console_pane').show();
+           $('#console_pane').addClass('span8');
+
+           $('#console_btn').removeClass('btn-inverse');
+           $('#console_btn').addClass('btn-danger');
+
+            $('#console_btn').html('Hide Console');
+        }
+
     }
 </script>
 </body>
