@@ -99,7 +99,7 @@
                                     <button class="btn">ADP-Credit</button>
                                     <button class="btn">ADP-CV</button>
                                     <button class="btn">Deployment-Test</button>
-                                    <button class="btn" onclick="$('#step1_other_alert').fadeIn();">Other...</button>
+                                    <button class="btn" onclick="jQuery('#step1_other_alert').fadeIn();">Other...</button>
                                 </div>
                                 <p>&nbsp;</p>
                                 <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(1,2);">Next <span class="icon-circle-arrow-right"></span></button>
@@ -161,7 +161,7 @@
                                 </div>
 
                                 <p>&nbsp;</p>
-                                <button class="btn btn-large btn-success" type="submit" onclick="$('#myCarousel').carousel(0);">Start Over <span class="icon-share-alt"></span> </button>
+                                <button class="btn btn-large btn-success" type="submit" onclick="jQuery('#myCarousel').carousel(0);">Start Over <span class="icon-share-alt"></span> </button>
                                 <button class="btn btn-large btn-danger" type="submit">Exit <span class="icon-off"></span> </button>
                             </form>
                         </div>
@@ -218,42 +218,46 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+<script src="/src/Prototype/prototype.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    jQuery.noConflict();
+</script>
 <script src="/src/bootstrap/js/bootstrap.min.js"></script>
 <script type='text/javascript'>
-    $(document).ready(function () {
-        if ($("[rel=tooltip]").length) {
-            $("[rel=tooltip]").tooltip();
+    jQuery(document).ready(function () {
+        if (jQuery("[rel=tooltip]").length) {
+            jQuery("[rel=tooltip]").tooltip();
         }
     });
 </script>
 <script type="text/javascript">
     function wizard_step(from, to){
-        $('#myCarousel').carousel('next');
+        jQuery('#myCarousel').carousel('next');
     }
 
     function toggleConsole(){
-        if($('#console_btn').html() == "Hide Console"){
-            $('#tool_pane').removeClass('span4');
-            $('#tool_pane').addClass('span11');
+        if(jQuery('#console_btn').html() == "Hide Console"){
+            jQuery('#tool_pane').removeClass('span4');
+            jQuery('#tool_pane').addClass('span11');
 
-            $('#console_pane').hide();
+            jQuery('#console_pane').hide();
 
-            $('#console_btn').removeClass('btn-danger');
-            $('#console_btn').addClass('btn-inverse');
+            jQuery('#console_btn').removeClass('btn-danger');
+            jQuery('#console_btn').addClass('btn-inverse');
 
-            $('#console_btn').html('Show Console');
+            jQuery('#console_btn').html('Show Console');
         }else{
-           $('#tool_pane').removeClass('span11');
-           $('#tool_pane').addClass('span4');
+           jQuery('#tool_pane').removeClass('span11');
+           jQuery('#tool_pane').addClass('span4');
 
-           $('#console_pane').show();
-           $('#console_pane').addClass('span8');
+           jQuery('#console_pane').show();
+           jQuery('#console_pane').addClass('span8');
 
-           $('#console_btn').removeClass('btn-inverse');
-           $('#console_btn').addClass('btn-danger');
+           jQuery('#console_btn').removeClass('btn-inverse');
+           jQuery('#console_btn').addClass('btn-danger');
 
-            $('#console_btn').html('Hide Console');
+            jQuery('#console_btn').html('Hide Console');
         }
 
     }
