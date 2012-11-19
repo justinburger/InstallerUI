@@ -50,15 +50,6 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-
-
 </head>
 
 <body>
@@ -66,14 +57,15 @@
     <div style="width:250px; margin-right: auto; margin-left: auto;" >
         <h1><span class="icon-cloud"></span> Installer</h1>
         <p>Simple Github Deployment System</p>
-        <p><button id="console_btn" class="btn btn-inverse" rel="tooltip" data-original-title="Realtime view of deployment logging." data-placement="right" onclick="toggleConsole();">Toogle Console</button></p>
-
+        <p>
+            <button id="console_btn"
+                    class="btn btn-inverse"
+                    rel="tooltip"
+                    data-original-title="Realtime view of deployment logging."
+                    data-placement="right"
+                    onclick="toggleConsole();">Toogle Console</button>
+        </p>
         <p>&nbsp;</p>
-        <div id="general_alert_pane" class="alert alert-error" style="width:200px;">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>Error:</strong>
-            Hi!
-        </div>
     </div>
 </div>
 <div class="container-fluid">
@@ -82,7 +74,7 @@
         <div id="tool_pane" class="span12">
 
 
-                <div id="myCarousel" class="carousel slide">
+                <div id="myCarousel" class="carousel slide" data-interval="false">
                     <!-- Carousel items -->
                     <div class="carousel-inner" data-interval="false">
                         <!-- STEP #1 -->
@@ -100,16 +92,7 @@
                                 <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Select an Organization</h3>
                                 <p>The entire organization is deployed, not just individual repositories.</p>
                                 <p></p>
-                                <div class="alert" id="step1_other_alert" style="display:none;">
-                                    <button type="button" class="close" data-dismiss="alert">×</button>
-                                    <strong>Coming Soon!<br/></strong> Pick from the list provided.
-                                </div>
-                                <div class="alert" id="step2_other_alert" style="display:none;">
-                                    <button type="button" class="close" data-dismiss="alert">×</button>
-                                    <strong>Error!<br/></strong> Pick an Organization first!
-                                </div>
-
-                                <div id="step1_organization_list" class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
+                                <div id="step1_organization_list" class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;" rel="tooltip" data-placement="right" data-trigger="manual" title="Pick an Organization to continue.">
                                     <button id="step1_organization_list_please_wait" class="btn btn-link">Please Wait..</button>
                                 </div>
                                 <p>&nbsp;</p>
@@ -150,7 +133,7 @@
                                 <p>Select an environment, the repositories will be rsynced to the environment. An environment may be one or many servers. Including web and database servers.</p>
                                 <p></p>
 
-                                <div id="step4_organization_list" class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
+                                <div id="step4_organization_list" class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;" rel="tooltip" data-placement="right" data-trigger="manual" title="Pick an Environment to continue.">
                                     <button id="step4_organization_list_please_wait" class="btn btn-link">Please Wait..</button>
                                 </div>
                                 <p>&nbsp;</p>
@@ -240,37 +223,6 @@
 
     });
 
-</script>
-<script type="text/javascript">
-    function wizard_step(from, to){
-        jQuery('#myCarousel').carousel('next');
-    }
-
-    function toggleConsole(){
-        if(jQuery('#console_btn').html() == "Hide Console"){
-            jQuery('#tool_pane').removeClass('span4');
-            jQuery('#tool_pane').addClass('span11');
-
-            jQuery('#console_pane').hide();
-
-            jQuery('#console_btn').removeClass('btn-danger');
-            jQuery('#console_btn').addClass('btn-inverse');
-
-            jQuery('#console_btn').html('Show Console');
-        }else{
-           jQuery('#tool_pane').removeClass('span11');
-           jQuery('#tool_pane').addClass('span4');
-
-           jQuery('#console_pane').show();
-           jQuery('#console_pane').addClass('span8');
-
-           jQuery('#console_btn').removeClass('btn-inverse');
-           jQuery('#console_btn').addClass('btn-danger');
-
-            jQuery('#console_btn').html('Hide Console');
-        }
-
-    }
 </script>
 </body>
 </html>
