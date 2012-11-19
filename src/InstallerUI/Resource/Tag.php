@@ -8,6 +8,8 @@ use \Tonic\Resource as Resource;
  * @uri /Tag
  */
 class Tag extends Resource{
+    public $container;
+
     /**
      * @method GET
      * @provides text/json
@@ -18,6 +20,14 @@ class Tag extends Resource{
             'ADP-CV',
             'Deployment-Test'
         ));
+    }
+
+    /**
+     * @method PUT
+     * @provides text/json
+     */
+    function put($name = 'World') {
+        return json_encode('V5.154');
     }
 
 }

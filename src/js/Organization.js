@@ -65,7 +65,7 @@ function LoadStep1OrgList(){
 }
 
 function wizard_step(from, to){
-    
+
 
 
     if(to ==2){
@@ -75,6 +75,8 @@ function wizard_step(from, to){
             $('#step1_organization_list').tooltip('show')
             return;
         }
+    }else if(to ==3){
+        createBuildTag();
     }else if(to ==5){
         environment = $('#step4_organization_list').children('.btn-group button.active').html();
 
@@ -113,4 +115,27 @@ function toggleConsole(){
         jQuery('#console_btn').html('Hide Console');
     }
 
+}
+
+
+function createBuildTag(){
+    jQuery.ajax('/Tag',{
+        type:'PUT',
+        headers: {
+            Accept : "text/json",
+            "Content-Type": "text/json"
+        },
+        format: 'text/json',
+        dataTypes: 'json',
+        statusCode: {
+            404: function() {
+                alert("page not found");
+            },
+            200: function(data) {
+                $('#step3_next_btn').fadeIn();
+
+                $('#tagging_progress').children('.bar').width('100%');
+
+            }}
+    });
 }
