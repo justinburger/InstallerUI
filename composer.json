@@ -23,8 +23,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Tonic": "src/Tonic/src",
-            "InstallerUI": "src/"
+            "Tonic": "src/tonic/src",
+            "InstallerUI": "src"
         }
     }
 }

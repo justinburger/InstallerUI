@@ -1,17 +1,18 @@
 <?php
 
-namespace installerUI;
+namespace InstallerUI;
 
 use \Tonic\Resource as Resource;
 
 /**
  * Single Snippet Resource
- * @uri /installerUI/:idhash
+ * @uri /InstallerUI/:idhash
  */
-class installerUI extends Resource{
+class InstallerUI extends Resource{
     /**
      * @method GET
      * @provides text/html
+     * @provides application/json
      */
     function get($request, $idhash) {
         return 'Hello '.$request. $idhash;

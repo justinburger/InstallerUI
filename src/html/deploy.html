@@ -44,7 +44,6 @@
         }
 
     </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -70,9 +69,15 @@
         <p><button id="console_btn" class="btn btn-inverse" rel="tooltip" data-original-title="Realtime view of deployment logging." data-placement="right" onclick="toggleConsole();">Toogle Console</button></p>
 
         <p>&nbsp;</p>
+        <div id="general_alert_pane" class="alert alert-error" style="width:200px;">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Error:</strong>
+            Hi!
+        </div>
     </div>
 </div>
 <div class="container-fluid">
+
     <div class="row-fluid">
         <div id="tool_pane" class="span12">
 
@@ -81,7 +86,16 @@
                     <!-- Carousel items -->
                     <div class="carousel-inner" data-interval="false">
                         <!-- STEP #1 -->
-                        <div id="step1" class="active item">
+                        <div id="step0" class="active item">
+                            <form class="form-signin">
+                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Welcome!</h3>
+                                <p>The entire organization is deployed, not just individual repositories.</p>
+                                <p></p>
+                                <p>&nbsp;</p>
+                                <button class="btn btn-large btn-primary" type="button" onclick="LoadStep1OrgList();">Get Started <span class="icon-circle-arrow-right"></span></button>
+                            </form>
+                        </div>
+                        <div id="step1" class="item">
                             <form class="form-signin">
                                 <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Select an Organization</h3>
                                 <p>The entire organization is deployed, not just individual repositories.</p>
@@ -95,14 +109,11 @@
                                     <strong>Error!<br/></strong> Pick an Organization first!
                                 </div>
 
-                                <div class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
-                                    <button class="btn">ADP-Credit</button>
-                                    <button class="btn">ADP-CV</button>
-                                    <button class="btn">Deployment-Test</button>
-                                    <button class="btn" onclick="jQuery('#step1_other_alert').fadeIn();">Other...</button>
+                                <div id="step1_organization_list" class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
+                                    <button id="step1_organization_list_please_wait" class="btn btn-link">Please Wait..</button>
                                 </div>
                                 <p>&nbsp;</p>
-                                <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(1,2);">Next <span class="icon-circle-arrow-right"></span></button>
+                                <button class="btn btn-large btn-primary" type="button" onclick="wizard_step(1,2);">Next <span class="icon-circle-arrow-right"></span></button>
                             </form>
                         </div>
                         <!-- STEP #2 -->
@@ -113,8 +124,8 @@
                                 <p></p>
 
                                 <p>&nbsp;</p>
-                                <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(2,3);" rel="tooltip" data-original-title="The next build number is: v5.156" data-placement="left">Yes</button>&nbsp;
-                                <button class="btn btn-large btn-primary" type="submit" rel="tooltip" data-original-title="Don't Worry, if you say no, you can an existing build number." data-placement="right">&nbsp;No&nbsp;</button>
+                                <button class="btn btn-large btn-primary" type="button" onclick="wizard_step(2,3);" rel="tooltip" data-original-title="The next build number is: v5.156" data-placement="left">Yes</button>&nbsp;
+                                <button class="btn btn-large btn-primary" type="button" rel="tooltip" data-original-title="Don't Worry, if you say no, you can an existing build number." data-placement="right">&nbsp;No&nbsp;</button>
                             </form>
                         </div>
                         <!-- STEP #3 -->
@@ -129,7 +140,7 @@
                                 </div>
 
                                 <p>&nbsp;</p>
-                                <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(3,4);">Next <span class="icon-circle-arrow-right"></span></button>
+                                <button class="btn btn-large btn-primary" type="button" onclick="LoadStep4OrgList();">Next <span class="icon-circle-arrow-right"></span></button>
                             </form>
                         </div>
                         <!-- STEP #4 -->
@@ -139,14 +150,11 @@
                                 <p>Select an environment, the repositories will be rsynced to the environment. An environment may be one or many servers. Including web and database servers.</p>
                                 <p></p>
 
-                                <div class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
-                                    <button class="btn">qa</button>
-                                    <button class="btn">staging</button>
-                                    <button class="btn disabled" rel="tooltip" data-original-title="Insufficient permissions." data-placement="left">production</button>
-                                    <button class="btn btn-info">Other...</button>
+                                <div id="step4_organization_list" class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;">
+                                    <button id="step4_organization_list_please_wait" class="btn btn-link">Please Wait..</button>
                                 </div>
                                 <p>&nbsp;</p>
-                                <button class="btn btn-large btn-primary" type="submit" onclick="wizard_step(4,5);">Next <span class="icon-circle-arrow-right"></span></button>
+                                <button class="btn btn-large btn-primary" type="button" onclick="wizard_step(4,5);">Next <span class="icon-circle-arrow-right"></span></button>
                             </form>
                         </div>
                         <!-- STEP #5 -->
@@ -161,8 +169,8 @@
                                 </div>
 
                                 <p>&nbsp;</p>
-                                <button class="btn btn-large btn-success" type="submit" onclick="jQuery('#myCarousel').carousel(0);">Start Over <span class="icon-share-alt"></span> </button>
-                                <button class="btn btn-large btn-danger" type="submit">Exit <span class="icon-off"></span> </button>
+                                <button class="btn btn-large btn-success" type="button" onclick="jQuery('#myCarousel').carousel(0);">Start Over <span class="icon-share-alt"></span> </button>
+                                <button class="btn btn-large btn-danger" type="button">Exit <span class="icon-off"></span> </button>
                             </form>
                         </div>
                     </div>
@@ -218,18 +226,20 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="/src/Prototype/prototype.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-    jQuery.noConflict();
-</script>
 <script src="/src/bootstrap/js/bootstrap.min.js"></script>
+<script src="/src/js/Organization.js"></script>
+
 <script type='text/javascript'>
+
+
     jQuery(document).ready(function () {
         if (jQuery("[rel=tooltip]").length) {
             jQuery("[rel=tooltip]").tooltip();
         }
+
     });
+
 </script>
 <script type="text/javascript">
     function wizard_step(from, to){

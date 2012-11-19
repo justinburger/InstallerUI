@@ -1,2 +1,6 @@
 RewriteEngine On    # Turn on the rewriting engine
 RewriteRule    ^deploy/?$    src/html/deploy.html    [NC,L]
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+RewriteRule ^.*$ ./index.php

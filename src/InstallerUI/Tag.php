@@ -10,10 +10,14 @@ use \Tonic\Resource as Resource;
 class Tag extends Resource{
     /**
      * @method GET
-     * @provides text/html
+     * @provides text/json
      */
-    function sayHello($name = 'World') {
-        return 'Hello '.$name;
+    function get($name = 'World') {
+        return json_encode(array(
+            'ADP-Credit',
+            'ADP-CV',
+            'Deployment-Test'
+        ));
     }
 
 }
