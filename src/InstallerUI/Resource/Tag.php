@@ -1,4 +1,13 @@
 <?php
+/**
+ * Tag RESTful Resourse
+ *
+ * @package RestfulResource
+ * @subpackage Tag
+ * @author Justin Burger <j@justinburger.com>
+ *
+ */
+
 namespace installerUI;
 
 use \Tonic\Resource as Resource;
