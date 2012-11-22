@@ -77,85 +77,19 @@
                 <div id="myCarousel" class="carousel slide" data-interval="false">
                     <!-- Carousel items -->
                     <div class="carousel-inner" data-interval="false">
+
+                        <!-- STEP #0 -->
+                        <div id="step0" class="active item"></div>
                         <!-- STEP #1 -->
-                        <div id="step0" class="active item">
-                            <form class="form-signin">
-                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Welcome!</h3>
-                                <p>The entire organization is deployed, not just individual repositories.</p>
-                                <p></p>
-                                <p>&nbsp;</p>
-                                <button class="btn btn-large btn-primary" type="button" onclick="LoadStep1OrgList();">Get Started <span class="icon-circle-arrow-right"></span></button>
-                            </form>
-                        </div>
-                        <div id="step1" class="item">
-                            <form class="form-signin">
-                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Select an Organization</h3>
-                                <p>The entire organization is deployed, not just individual repositories.</p>
-                                <p></p>
-                                <div id="step1_organization_list" class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;" rel="tooltip" data-placement="right" data-trigger="manual" title="Pick an Organization to continue.">
-                                    <button id="step1_organization_list_please_wait" class="btn btn-link">Please Wait..</button>
-                                </div>
-                                <p>&nbsp;</p>
-                                <button class="btn btn-large btn-primary" type="button" onclick="wizard_step(1,2);">Next <span class="icon-circle-arrow-right"></span></button>
-                            </form>
-                        </div>
+                        <div id="step1" class="item"></div>
                         <!-- STEP #2 -->
-                        <div id="step2" class="item">
-                            <form class="form-signin">
-                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Create Build Tag?</h3>
-                                <p>Installer will tag every repositories in the organization with a build tag (e.g. v1.23).</p>
-                                <p></p>
-
-                                <p>&nbsp;</p>
-                                <button class="btn btn-large btn-primary" type="button" onclick="wizard_step(2,3);" rel="tooltip" data-original-title="The next build number is: v5.156" data-placement="left">Yes</button>&nbsp;
-                                <button class="btn btn-large btn-primary" type="button" rel="tooltip" data-original-title="Don't Worry, if you say no, you can an existing build number." data-placement="right">&nbsp;No&nbsp;</button>
-                            </form>
-                        </div>
+                        <div id="step2" class="item"></div>
                         <!-- STEP #3 -->
-                        <div id="step3" class="item">
-                            <form class="form-signin">
-                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Tagging Organization</h3>
-                                <p>Please wait while we tag all repositories in <span class="label label-inverse">ADP-Credit</span> with <span class="label label-inverse">v5.197</span></p>
-                                <p></p>
-
-                                <div id="tagging_progress" class="progress progress-striped active">
-                                    <div class="bar" style="width: 40%;"></div>
-                                </div>
-
-                                <p>&nbsp;</p>
-                                <button id="step3_next_btn" class="btn btn-large btn-primary" type="button" onclick="LoadStep4OrgList();" style="display:none;">Next <span class="icon-circle-arrow-right"></span></button>
-                            </form>
-                        </div>
+                        <div id="step3" class="item"></div>
                         <!-- STEP #4 -->
-                        <div id="step4" class="item">
-                            <form class="form-signin">
-                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Deploy to?</h3>
-                                <p>Select an environment, the repositories will be rsynced to the environment. An environment may be one or many servers. Including web and database servers.</p>
-                                <p></p>
-
-                                <div id="step4_organization_list" class="btn-group btn-group-vertical" data-toggle="buttons-radio" style="width: 90%;" rel="tooltip" data-placement="right" data-trigger="manual" title="Pick an Environment to continue.">
-                                    <button id="step4_organization_list_please_wait" class="btn btn-link">Please Wait..</button>
-                                </div>
-                                <p>&nbsp;</p>
-                                <button class="btn btn-large btn-primary" type="button" onclick="wizard_step(4,5);">Next <span class="icon-circle-arrow-right"></span></button>
-                            </form>
-                        </div>
+                        <div id="step4" class="item"></div>
                         <!-- STEP #5 -->
-                        <div id="step5" class="item">
-                            <form class="form-signin">
-                                <h3 class="form-signin-heading"><span class="icon-bolt"></span>&nbsp;Deploying Organization </h3>
-                                <p>Please wait while we Deploy the build of <span class="label label-inverse">ADP-Credit</span> to <span class="label label-inverse">Production</span></p>
-                                <p></p>
-
-                                <div class="progress progress-striped active">
-                                    <div class="bar" style="width: 40%;"></div>
-                                </div>
-
-                                <p>&nbsp;</p>
-                                <button class="btn btn-large btn-success" type="button" onclick="jQuery('#myCarousel').carousel(0);">Start Over <span class="icon-share-alt"></span> </button>
-                                <button class="btn btn-large btn-danger" type="button">Exit <span class="icon-off"></span> </button>
-                            </form>
-                        </div>
+                        <div id="step5" class="item"></div>
                     </div>
                 </div>
 
@@ -217,6 +151,7 @@
 
 
     jQuery(document).ready(function () {
+        loadWizardPanes();
         if (jQuery("[rel=tooltip]").length) {
             jQuery("[rel=tooltip]").tooltip();
         }

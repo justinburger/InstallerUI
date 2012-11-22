@@ -1,3 +1,48 @@
+/**
+ * Load Wizard Panes
+ * instead of including them in a long, ugly, hard to nav file,
+ * wizard panes are stored in their own html files.
+ * This function constructs the wizard panes on page load.
+ */
+function loadWizardPanes(){
+    $('#step0').load('/src/html/deploy/step0.html');
+    $('#step1').load('/src/html/deploy/step1.html');
+    $('#step2').load('/src/html/deploy/step2.html');
+    $('#step3').load('/src/html/deploy/step3.html');
+    $('#step4').load('/src/html/deploy/step4.html');
+    $('#step5').load('/src/html/deploy/step5.html');
+}
+
+/**
+ * Toggle Console
+ * show, or hide the console window.
+ */
+function toggleConsole(){
+    if(jQuery('#console_btn').html() == "Hide Console"){
+        jQuery('#tool_pane').removeClass('span4');
+        jQuery('#tool_pane').addClass('span11');
+
+        jQuery('#console_pane').hide();
+        jQuery('#console_btn').removeClass('btn-danger');
+        jQuery('#console_btn').addClass('btn-inverse');
+        jQuery('#console_btn').html('Show Console');
+
+    }else{
+        jQuery('#tool_pane').removeClass('span11');
+        jQuery('#tool_pane').addClass('span4');
+
+        jQuery('#console_pane').show();
+        jQuery('#console_pane').addClass('span8');
+        jQuery('#console_btn').removeClass('btn-inverse');
+        jQuery('#console_btn').addClass('btn-danger');
+        jQuery('#console_btn').html('Hide Console');
+    }
+
+}
+
+
+
+
 function LoadStep4OrgList(){
 
     jQuery.ajax('/Environment',{
@@ -65,9 +110,6 @@ function LoadStep1OrgList(){
 }
 
 function wizard_step(from, to){
-
-
-
     if(to ==2){
         org = $('#step1_organization_list').children('.btn-group button.active').html();
 
@@ -91,31 +133,6 @@ function wizard_step(from, to){
 
 }
 
-function toggleConsole(){
-    if(jQuery('#console_btn').html() == "Hide Console"){
-        jQuery('#tool_pane').removeClass('span4');
-        jQuery('#tool_pane').addClass('span11');
-
-        jQuery('#console_pane').hide();
-
-        jQuery('#console_btn').removeClass('btn-danger');
-        jQuery('#console_btn').addClass('btn-inverse');
-
-        jQuery('#console_btn').html('Show Console');
-    }else{
-        jQuery('#tool_pane').removeClass('span11');
-        jQuery('#tool_pane').addClass('span4');
-
-        jQuery('#console_pane').show();
-        jQuery('#console_pane').addClass('span8');
-
-        jQuery('#console_btn').removeClass('btn-inverse');
-        jQuery('#console_btn').addClass('btn-danger');
-
-        jQuery('#console_btn').html('Hide Console');
-    }
-
-}
 
 
 function createBuildTag(){
