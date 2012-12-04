@@ -1,4 +1,5 @@
 RewriteEngine On    # Turn on the rewriting engine
+RewriteBase /installer2/
 RewriteRule    ^deploy/?$    src/html/deploy.html    [NC,L]
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f

@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Installer</title>
@@ -8,8 +8,8 @@
     <meta name="description" content="Github Based Deployment system.">
     <meta name="author" content="Justin Burger <j@justinburger.com>">
 
-    <link href="/src/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/src/Font-Awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Font-Awesome/css/font-awesome.css" rel="stylesheet">
     <style type="text/css">
         body {
             padding-top: 40px;
@@ -98,17 +98,15 @@
 
 
 
-<!-- Le javascript
-================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="/src/bootstrap/js/bootstrap.min.js"></script>
-<script src="/src/js/Organization.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/Organization.js"></script>
 
 <script type='text/javascript'>
 
 
-    jQuery(document).ready(function () {
+    $(document).ready(function () {
         loadWizardPanes();
         if (jQuery("[rel=tooltip]").length) {
             jQuery("[rel=tooltip]").tooltip();

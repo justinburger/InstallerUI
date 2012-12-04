@@ -5,12 +5,12 @@
  * This function constructs the wizard panes on page load.
  */
 function loadWizardPanes(){
-    $('#step0').load('/src/html/deploy/step0.html');
-    $('#step1').load('/src/html/deploy/step1.html');
-    $('#step2').load('/src/html/deploy/step2.html');
-    $('#step3').load('/src/html/deploy/step3.html');
-    $('#step4').load('/src/html/deploy/step4.html');
-    $('#step5').load('/src/html/deploy/step5.html');
+    $('#step0').load('deploy/step0.html');
+    $('#step1').load('deploy/step1.html');
+    $('#step2').load('deploy/step2.html');
+    $('#step3').load('deploy/step3.html');
+    $('#step4').load('deploy/step4.html');
+    $('#step5').load('deploy/step5.html');
 }
 
 /**
@@ -78,7 +78,7 @@ function LoadStep4OrgList(){
 
 function LoadStep1OrgList(){
 
-    jQuery.ajax('/Organization',{
+    jQuery.ajax('../../Organization',{
         headers: {
             Accept : "text/json",
             "Content-Type": "text/json"
