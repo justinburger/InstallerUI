@@ -5,47 +5,25 @@
  * This function constructs the wizard panes on page load.
  */
 function loadWizardPanes(){
-    $('#step0').load('deploy/step0.html');
-    $('#step1').load('deploy/step1.html');
-    $('#step2').load('deploy/step2.html');
-    $('#step3').load('deploy/step3.html');
-    $('#step4').load('deploy/step4.html');
-    $('#step5').load('deploy/step5.html');
+        var options = {interval: false,pause: false};
+        $('#myCarousel').carousel(options);
+
+    $('#step0').load('src/html/deploy/step0.html');
+    $('#step1').load('src/html/deploy/step1.html');
+    $('#step2').load('src/html/deploy/step2.html');
+    $('#step3').load('src/html/deploy/step3.html');
+    $('#step4').load('src/html/deploy/step4.html');
+    $('#step5').load('src/html/deploy/step5.html');
 }
 
-/**
- * Toggle Console
- * show, or hide the console window.
- */
-function toggleConsole(){
-    if(jQuery('#console_btn').html() == "Hide Console"){
-        jQuery('#tool_pane').removeClass('span4');
-        jQuery('#tool_pane').addClass('span11');
 
-        jQuery('#console_pane').hide();
-        jQuery('#console_btn').removeClass('btn-danger');
-        jQuery('#console_btn').addClass('btn-inverse');
-        jQuery('#console_btn').html('Show Console');
-
-    }else{
-        jQuery('#tool_pane').removeClass('span11');
-        jQuery('#tool_pane').addClass('span4');
-
-        jQuery('#console_pane').show();
-        jQuery('#console_pane').addClass('span8');
-        jQuery('#console_btn').removeClass('btn-inverse');
-        jQuery('#console_btn').addClass('btn-danger');
-        jQuery('#console_btn').html('Hide Console');
-    }
-
-}
 
 
 
 
 function LoadStep4OrgList(){
 
-    jQuery.ajax('/Environment',{
+    jQuery.ajax('Environment',{
         headers: {
             Accept : "text/json",
             "Content-Type": "text/json"
@@ -78,7 +56,7 @@ function LoadStep4OrgList(){
 
 function LoadStep1OrgList(){
 
-    jQuery.ajax('../../Organization',{
+    jQuery.ajax('Organization',{
         headers: {
             Accept : "text/json",
             "Content-Type": "text/json"
