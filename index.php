@@ -19,6 +19,12 @@ if(MOCK){
         return new InstallerUI\Data\Mock\Organization();
     };
 
+
+
+    $container['consoleLog'] = function ($c) {
+        return new InstallerUI\Data\Mock\ConsoleLog();
+    };
+
     $container['environment'] = function ($c) {
         return new InstallerUI\Data\Mock\Environment();
     };
@@ -29,6 +35,10 @@ if(MOCK){
 
     $container['environment'] = function ($c) {
         return new InstallerUI\Data\Environment();
+    };
+
+    $container['consoleLog'] = function ($c) {
+        return new InstallerUI\Data\ConsoleLog();
     };
 }
 

@@ -5,12 +5,23 @@
 /**
  * Initalizes the console functionality.
  */
-function initConsole(){
 
-    jQuery.ajax('/Console',{
+var lastConsoleLine = 0;
+
+function initConsole(){
+    pollforConsoleData();
+}
+
+
+function pollforConsoleData(){
+    jQuery.ajax('Console',{
         headers: {
             Accept : "text/json",
-            "Content-Type": "text/json"
+            "Content-Type": "text/json",
+
+        },
+        data: {
+            "lastLine": lastConsoleLine
         },
         format: 'text/json',
         dataTypes: 'json',
@@ -19,13 +30,19 @@ function initConsole(){
                 alert("page not found");
             },
             200: function(data) {
+                lastConsoleLine = data.line;
+                $.each(data.data, function(index, value) {
+                    $('#console_pane_inner').prepend('<div>'+value+'</div>');
 
-                $.each(data, function(index, value) {
-                    alert(value);
 
                 });
-            }}
+
+                setTimeout(function() { pollforConsoleData(); }, 5000);
+            }
+
+        }
     });
+
 }
 
 
