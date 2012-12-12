@@ -55,7 +55,6 @@ function LoadStep4OrgList(){
 }
 
 function LoadStep1OrgList(){
-
     jQuery.ajax('Organization',{
         headers: {
             Accept : "text/json",
@@ -84,19 +83,16 @@ function LoadStep1OrgList(){
             }}
     });
     wizard_step(0,1);
-
 }
 
 function wizard_step(from, to){
     if(to ==2){
         org = $('#step1_organization_list').children('.btn-group button.active').html();
-
+        setSelectedOrganization(org);
         if(org == '' || org == undefined){
             $('#step1_organization_list').tooltip('show')
             return;
         }
-    }else if(to ==3){
-        createBuildTag();
     }else if(to ==5){
         environment = $('#step4_organization_list').children('.btn-group button.active').html();
 
@@ -104,33 +100,28 @@ function wizard_step(from, to){
             $('#step4_organization_list').tooltip('show')
             return;
         }
+
+        $('#step5_org_lbl').html(getSelectedOrganization());
+        $('#step5_env_lbl').html(environment);
     }
+
     jQuery('#myCarousel').carousel('next');
+
+    if(to == 3){
+        initTaggingPane();
+    }
     jQuery('#myCarousel').carousel('pause');
 
 
 }
 
 
+var selectedOrganization = null;
 
-function createBuildTag(){
-    jQuery.ajax('/Tag',{
-        type:'PUT',
-        headers: {
-            Accept : "text/json",
-            "Content-Type": "text/json"
-        },
-        format: 'text/json',
-        dataTypes: 'json',
-        statusCode: {
-            404: function() {
-                alert("page not found");
-            },
-            200: function(data) {
-                $('#step3_next_btn').fadeIn();
+function setSelectedOrganization(org) {
+    selectedOrganization = org;
+}
 
-                $('#tagging_progress').children('.bar').width('100%');
-
-            }}
-    });
+function getSelectedOrganization() {
+    return selectedOrganization;
 }

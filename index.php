@@ -14,6 +14,16 @@ $app = new Tonic\Application(array(
 
 $container = new Pimple();
 
+
+/**
+ * Settings! --------------
+ */
+
+$container['backend_location'] = '/home/jburger/public_html/git/installer';
+
+
+
+
 if(MOCK){
     $container['organization'] = function ($c) {
         return new InstallerUI\Data\Mock\Organization();
