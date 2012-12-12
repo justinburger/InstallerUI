@@ -101,8 +101,7 @@ function wizard_step(from, to){
             return;
         }
 
-        $('#step5_org_lbl').html(getSelectedOrganization());
-        $('#step5_env_lbl').html(environment);
+        initDeployPane();
     }
 
     jQuery('#myCarousel').carousel('next');

@@ -32,7 +32,7 @@ class Tag extends Resource{
          * 3. return it.
          */
 
-        $tagCmd = '/usr/local/bin/php ' . $this->container['backend_location'] . '/tools/installTest.php --tag &';
+        $tagCmd = '/usr/local/bin/php ' . $this->container['backend_location'] . "/tools/installTest.php --tag -o {$organization} &";
 
         exec($tagCmd);
 
