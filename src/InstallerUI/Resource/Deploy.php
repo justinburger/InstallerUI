@@ -21,17 +21,13 @@ class Deploy extends Resource{
     public $container;
 
     /**
+     * Fires the Installer command line tool to deploy
+     * based on parms sent from the UI.
+     *
      * @method POST
      * @provides text/json
      */
     function post($organization) {
-        /**
-         * Steps:
-         * 1. Fire off a background process to tag.
-         * 2. Pick up the tagging version number from memcache
-         * 3. return it.
-         */
-
 
        $postData = json_decode($this->request->data);
 

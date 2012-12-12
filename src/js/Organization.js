@@ -12,12 +12,18 @@ function loadWizardPanes(){
     $('#step1').load('src/html/deploy/step1.html');
     $('#step2').load('src/html/deploy/step2.html');
     $('#step3').load('src/html/deploy/step3.html');
+    $('#stepSelectTag').load('src/html/deploy/step_selectTag.html');
     $('#step4').load('src/html/deploy/step4.html');
     $('#step5').load('src/html/deploy/step5.html');
 }
 
 
 
+
+function showSelectTag(){
+    stepSelectTag
+    jQuery('#myCarousel').carousel(6);
+}
 
 
 
