@@ -16,6 +16,7 @@ use \Tonic\Resource as Resource;
  * Single Snippet Resource
  * @uri /Tag
  * @uri /Tag/:organization
+ * @uri /Tag/:organization/:tag
  */
 class Tag extends Resource{
     public $container;
@@ -34,9 +35,11 @@ class Tag extends Resource{
 
         $tagCmd = '/usr/local/bin/php ' . $this->container['backend_location'] . "/tools/installTest.php --tag -o {$organization} &";
 
-        exec($tagCmd);
+        $outputfile = '/dev/null';
+        $pidfile = '/tmp/pid_deploy_tag';
 
-        sleep(1);
+        exec(sprintf("%s > %s 2>&1 & echo $! >> %s", $tagCmd, $outputfile, $pidfile));
+
 
         $memcache = new \Memcache();
         $memcache->connect('localhost', 11211) or die ("Could not connect");
@@ -52,13 +55,14 @@ class Tag extends Resource{
      * @method GET
      * @provides text/json
      */
-    function get($organization){
+    function get($organization, $tag){
+        $tag =     str_replace('_','.',$tag);
+
         $memcache = new \Memcache();
         $memcache->connect('localhost', 11211) or die ("Could not connect");
 
-        $tag = $_POST['tag'];
-
-        $progress = $memcache->get('tagging_' . strtolower($organization . $tag)  . '_progress');
+        $progressKey = 'tagging_' . strtolower($organization . $tag)  . '_progress';
+        $progress = $memcache->get($progressKey);
 
         return json_encode(array('progress'=>$progress));
     }
