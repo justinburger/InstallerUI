@@ -31,13 +31,13 @@ function pollforConsoleData(){
             },
             200: function(data) {
                 lastConsoleLine = data.line;
-                $.each(data.data, function(index, value) {
-                    $('#console_pane_inner').prepend('<div>'+value+'</div>');
+                jQuery.each(data.data, function(index, value) {
+                    jQuery('#console_pane_inner').prepend('<div>'+value+'</div>');
 
 
                 });
 
-                setTimeout(function() { pollforConsoleData(); }, 5000);
+                setTimeout(pollforConsoleData, 5000);
             }
 
         }

@@ -1,8 +1,8 @@
 
 function initDeployPane(){
-    $('#step5_org_lbl').html(getSelectedOrganization());
-    $('#step5_env_lbl').html($('#step4_organization_list').children('.btn-group button.active').html());
-    $('#step5_progress').children('.bar-success').css('width','1%');
+    jQuery('#step5_org_lbl').html(dw.Organization.getName());
+    jQuery('#step5_env_lbl').html(jQuery('#step4_organization_list').children('.btn-group button.active').html());
+    jQuery('#step5_progress').children('.bar-success').css('width','1%');
 
     initDeployPaneProgressPolling();
     requestDeployment();
@@ -11,9 +11,9 @@ function initDeployPane(){
 
 
 function requestDeployment(){
-    org = getSelectedOrganization();
-    version = getSelectedVersion();
-    environment = $('#step4_organization_list').children('.btn-group button.active').html()
+    org = dw.Organization.getName();
+    version = dw.Tag.getVersion();
+    environment = jQuery('#step4_organization_list').children('.btn-group button.active').html()
     jQuery.ajax('Deploy/'+org,{
         type:'POST',
         headers: {
@@ -46,10 +46,10 @@ function initDeployPaneProgressPolling(){
 
 
 function getDeployPaneProgress(){
-    var tag_uri_encoded = getSelectedVersion()+"";
+    var tag_uri_encoded = dw.Tag.getVersion()+"";
     tag_uri_encoded = tag_uri_encoded.replace(".", "_");
 
-    jQuery.ajax('Deploy/'+getSelectedOrganization() + '/' +  tag_uri_encoded,{
+    jQuery.ajax('Deploy/'+dw.Organization.getName() + '/' +  tag_uri_encoded,{
         type:'GET',
         headers: {
             Accept : "text/json",
@@ -62,8 +62,8 @@ function getDeployPaneProgress(){
                 alert("page not found");
             },
             200: function(data) {
-                $('#step5_progress_details').html(data.detail);
-                $('#step5_progress').children('.bar').css('width',data.progress+'%');
+                jQuery('#step5_progress_details').html(data.detail);
+                jQuery('#step5_progress').children('.bar').css('width',data.progress+'%');
 
                 if(data.progress < 100){
                     setTimeout('getDeployPaneProgress()', 1000);

@@ -102,17 +102,23 @@
 
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="src/js/jquery.min.js"></script>
+<script>
+    jQuery.noConflict();
+</script>
+
+<script src="src/js/prototype.js"></script>
 <script src="src/bootstrap/js/bootstrap.min.js"></script>
 <script src="src/js/Organization.js"></script>
 <script src="src/js/Console.js"></script>
 <script src="src/js/Tag.js"></script>
 <script src="src/js/Deploy.js"></script>
+<script src="src/js/DeploymentWizard.js"></script>
 
 <script type='text/javascript'>
 
 
-    $(document).ready(function () {
-        loadWizardPanes();
+    jQuery(document).ready(function () {
+        dw.initializeUI();
         if (jQuery("[rel=tooltip]").length) {
             jQuery("[rel=tooltip]").tooltip();
         }
