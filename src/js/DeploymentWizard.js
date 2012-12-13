@@ -9,6 +9,8 @@ DeploymentWizard.prototype = {
     initialize: function() {
         this.Organization = new Organization();
         this.Tag = new Tag();
+        this.Deploy = new Deploy();
+        this.DeploymentConsole = new DeploymentConsole();
 
     },
 
@@ -134,7 +136,7 @@ DeploymentWizard.prototype = {
                 return;
             }
 
-            initDeployPane();
+            this.Deploy.initDeployPane();
         }
 
         jQuery('#myCarousel').carousel(to);
