@@ -21,7 +21,6 @@ function loadWizardPanes(){
 
 
 function showSelectTag(){
-    stepSelectTag
     jQuery('#myCarousel').carousel(6);
 }
 
@@ -110,7 +109,7 @@ function wizard_step(from, to){
         initDeployPane();
     }
 
-    jQuery('#myCarousel').carousel('next');
+    jQuery('#myCarousel').carousel(to);
 
     if(to == 3){
         initTaggingPane();

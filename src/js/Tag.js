@@ -20,8 +20,9 @@ function tagOrganization(org){
                 alert("page not found");
             },
             200: function(data) {
-                $('#tagging_version_lbl').html(data.tag);
-                initTaggingProgressBar(data.tag);
+                setSelectedVersion(data.tag);
+                $('#tagging_version_lbl').html(getSelectedVersion());
+                initTaggingProgressBar(getSelectedVersion());
 
             }}
     });
@@ -34,8 +35,6 @@ function tagOrganization(org){
 function initTaggingPane(){
     tagOrganization(getSelectedOrganization());
     $('#tagging_org_lbl').html(getSelectedOrganization());
-
-    //$('#tagging_version_lbl').html(getSelectedOrganization());
 }
 
 /**
@@ -72,4 +71,36 @@ function getTaggingProgressUpdate(tag){
     });
 }
 
+
+function validateTagSelectPane(){
+    $('#version_major').tooltip('hide');
+    $('#version_minor').tooltip('hide');
+
+    if(!$.isNumeric($('#version_major').val())){
+        $('#version_major').tooltip('show');
+        return;
+    }
+    if(!$.isNumeric($('#version_minor').val())){
+        $('#version_minor').tooltip('show') ;
+        return;
+    }
+
+    setSelectedVersion("v" + $('#version_major').val() + "." + $('#version_minor').val());
+
+    LoadStep4OrgList();
+
+
+}
+
+
+
+var selectedVersion = null;
+
+function setSelectedVersion(v) {
+    selectedVersion = v;
+}
+
+function getSelectedVersion() {
+    return selectedVersion;
+}
 

@@ -5,14 +5,13 @@
 
     <table>
             <tr>
-                <td><h3>V</h3></td>
-                <td><input type="text" id="version_major" style="width:30px;" maxlength="2"/> </td>
+                <td><input type="text" id="version_major" style="width:50px;" maxlength="2"  placeholder="Major" rel="tooltip" data-placement="right" data-trigger="manual" title="Please provide a numeric major version number."/> </td>
                 <td>.</td>
-                <td><input type="text" id="version_minor" style="width:30px;" maxlength="3"/> </td>
+                <td><input type="text" id="version_minor" style="width:50px;" maxlength="3"  placeholder="Minor" rel="tooltip" data-placement="right" data-trigger="manual" title="Please provide a numeric minor version number."/> </td>
             </tr>
 
     </table>
 
     <p>&nbsp;</p>
-    <button class="btn btn-large btn-primary" type="button" onclick="wizard_step(4,5);">Next <span class="icon-circle-arrow-right"></span></button>
+    <button class="btn btn-large btn-primary" type="button" onclick="validateTagSelectPane();">Next <span class="icon-circle-arrow-right"></span></button>
 </form>

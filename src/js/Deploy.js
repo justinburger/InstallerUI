@@ -14,7 +14,7 @@ function initDeployPane(){
 
 function requestDeployment(){
     org = getSelectedOrganization();
-    version = $('#tagging_version_lbl').html();
+    version = getSelectedVersion();
     environment = $('#step4_organization_list').children('.btn-group button.active').html()
     jQuery.ajax('Deploy/'+org,{
         type:'POST',
@@ -34,8 +34,8 @@ function requestDeployment(){
                 alert("page not found");
             },
             200: function(data) {
-                $('#tagging_version_lbl').html(data.tag);
-                initTaggingProgressBar(data.tag);
+
+
 
             }}
     });
