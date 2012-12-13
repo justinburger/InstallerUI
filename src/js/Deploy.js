@@ -2,12 +2,10 @@
 function initDeployPane(){
     $('#step5_org_lbl').html(getSelectedOrganization());
     $('#step5_env_lbl').html($('#step4_organization_list').children('.btn-group button.active').html());
-    $('#step5_progress').children('.bar-danger').css('width','1%');
-    $('#step5_progress').children('.bar-warning').css('width','1%');
     $('#step5_progress').children('.bar-success').css('width','1%');
 
+    initDeployPaneProgressPolling();
     requestDeployment();
-
 
 }
 
@@ -42,8 +40,36 @@ function requestDeployment(){
 }
 
 
-function initDeployPaneProgressPolling(){}
+function initDeployPaneProgressPolling(){
+    getDeployPaneProgress();
+}
 
 
-function getDeployPaneProgress(){}
+function getDeployPaneProgress(){
+    var tag_uri_encoded = getSelectedVersion()+"";
+    tag_uri_encoded = tag_uri_encoded.replace(".", "_");
+
+    jQuery.ajax('Deploy/'+getSelectedOrganization() + '/' +  tag_uri_encoded,{
+        type:'GET',
+        headers: {
+            Accept : "text/json",
+            "Content-Type": "text/json"
+        },
+        format: 'text/json',
+        dataTypes: 'json',
+        statusCode: {
+            404: function() {
+                alert("page not found");
+            },
+            200: function(data) {
+                $('#step5_progress_details').html(data.detail);
+                $('#step5_progress').children('.bar').css('width',data.progress+'%');
+
+                if(data.progress < 100){
+                    setTimeout('getDeployPaneProgress()', 1000);
+                }
+
+            }}
+    });
+}
 

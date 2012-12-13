@@ -16,6 +16,7 @@ use \Tonic\Resource as Resource;
  * Single Snippet Resource
  * @uri /Deploy
  * @uri /Deploy/:organization
+ * @uri /Deploy/:organization/:tag
  */
 class Deploy extends Resource{
     public $container;
@@ -44,6 +45,30 @@ class Deploy extends Resource{
 
 
         return json_encode(array('status'=>'Started'));
+    }
+
+
+    /**
+     * Fires the Installer command line tool to deploy
+     * based on parms sent from the UI.
+     *
+     * @method GET
+     * @provides text/json
+     */
+    function get($organization, $tag){
+        $tag =     str_replace('_','.',$tag);
+
+        $memcache = new \Memcache();
+        $memcache->connect('localhost', 11211) or die ("Could not connect");
+
+        $progressKey = 'deploying_' . strtolower($organization . $tag)  . '_progress';
+        $progress = $memcache->get($progressKey);
+
+        if($progress['progress'] === false){
+            $progress['progress'] = 0;
+        }
+
+        return json_encode(array('progress'=>$progress['progress'], 'detail'=>$progress['detail']));
     }
 
 }
