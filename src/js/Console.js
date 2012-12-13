@@ -13,12 +13,17 @@ var DeploymentConsole = Class.create();
 DeploymentConsole.prototype = {
     initialize: function() {
         this.lastConsoleLine = 0;
+        this.stopPolling = false;
     },
 
     initConsole: function(){
+        this.stopPolling = false;
         this.pollforConsoleData();
     },
 
+    stopConsolePolling: function(){
+        this.stopPolling = true;
+    },
 
     pollforConsoleData: function(){
         jQuery.ajax('Console',{
@@ -43,8 +48,9 @@ DeploymentConsole.prototype = {
 
 
                     });
-
-                    setTimeout(dw.DeploymentConsole.pollforConsoleData, 5000);
+                    if (dw.DeploymentConsole.stopPolling !=true){
+                        setTimeout(dw.DeploymentConsole.pollforConsoleData, 5000);
+                    }
                 }
 
             }
@@ -67,6 +73,7 @@ DeploymentConsole.prototype = {
             jQuery('#console_btn').removeClass('btn-danger');
             jQuery('#console_btn').addClass('btn-inverse');
             jQuery('#console_btn').html('Show Console');
+            dw.DeploymentConsole.stopConsolePolling();
 
         }else{
             jQuery('#tool_pane').removeClass('span11');

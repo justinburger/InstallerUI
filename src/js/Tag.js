@@ -91,6 +91,10 @@ Tag.prototype = {
                     jQuery('#tagging_progress').children('.bar').css('width',data.progress+'%');
                     jQuery('#step3_next_btn').show();
 
+                    if(data.progress < 100){
+                        setTimeout('dw.Tag.getTaggingProgressUpdate()', 1000);
+                    }
+
                 }}
         });
     },
