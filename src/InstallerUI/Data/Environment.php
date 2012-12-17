@@ -1,9 +1,11 @@
 <?php
 namespace InstallerUI\Data;
 
-class Environment{
+class Environment
+{
 
-    public function getAll(){
+    public function getAll()
+    {
         return array('qa','staging');
     }
 }

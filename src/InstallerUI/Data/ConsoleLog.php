@@ -1,9 +1,11 @@
 <?php
 namespace InstallerUI\Data;
 
-class ConsoleLog{
+class ConsoleLog
+{
 
-    public function getAll(){
+    public function getAll()
+    {
         return array('qa','staging','production');
     }
 }

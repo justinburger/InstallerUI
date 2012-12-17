@@ -7,7 +7,8 @@ use \Tonic\Resource as Resource;
  * Single Snippet Resource
  * @uri /Organization
  */
-class Organization extends Resource{
+class Organization extends Resource
+{
     /* Pimple Container */
     public $container;
 
@@ -15,11 +16,11 @@ class Organization extends Resource{
      * @method GET
      * @provides text/json
      */
-    function get($name = 'World') {
+    public function get($name = 'World')
+    {
 
         $organization = $this->container['organization'];
 
         return json_encode($organization->getAll());
     }
-
 }

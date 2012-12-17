@@ -18,14 +18,16 @@ use \Tonic\Resource as Resource;
  * @uri /Tag/:organization
  * @uri /Tag/:organization/:tag
  */
-class Tag extends Resource{
+class Tag extends Resource
+{
     public $container;
 
     /**
      * @method POST
      * @provides text/json
      */
-    function post($organization) {
+    public function post($organization)
+    {
         /**
          * Steps:
          * 1. Fire off a background process to tag.
@@ -33,7 +35,9 @@ class Tag extends Resource{
          * 3. return it.
          */
 
-        $tagCmd = '/usr/local/bin/php ' . $this->container['backend_location'] . "/tools/installTest.php --tag -o {$organization} &";
+        $tagCmd = '/usr/local/bin/php ' .
+                    $this->container['backend_location'] .
+                    "/tools/installTest.php --tag -o {$organization} &";
 
         $outputfile = '/dev/null';
         $pidfile = '/tmp/pid_deploy_tag';
@@ -55,8 +59,9 @@ class Tag extends Resource{
      * @method GET
      * @provides text/json
      */
-    function get($organization, $tag){
-        $tag =     str_replace('_','.',$tag);
+    public function get($organization, $tag)
+    {
+        $tag =  str_replace('_', '.', $tag);
 
         $memcache = new \Memcache();
         $memcache->connect('localhost', 11211) or die ("Could not connect");
@@ -66,5 +71,4 @@ class Tag extends Resource{
 
         return json_encode(array('progress'=>$progress));
     }
-
 }

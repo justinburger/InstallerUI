@@ -2,9 +2,11 @@
 namespace InstallerUI\Data\Mock;
 
 
-class Organization{
+class Organization
+{
 
-    public function getAll(){
+    public function getAll()
+    {
         return array('ADP-Credit','ADP-CV','Deployment-Test');
     }
 }

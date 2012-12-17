@@ -7,7 +7,8 @@ use \Tonic\Resource as Resource;
  * Single Snippet Resource
  * @uri /Environment
  */
-class Environment extends Resource{
+class Environment extends Resource
+{
     /* Pimple Container */
     public $container;
 
@@ -15,11 +16,11 @@ class Environment extends Resource{
      * @method GET
      * @provides text/json
      */
-    function get($name = 'World') {
+    public function get($name = 'World')
+    {
 
         $environment = $this->container['environment'];
 
         return json_encode($environment->getAll());
     }
-
 }

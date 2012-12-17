@@ -18,7 +18,8 @@ use \Tonic\Resource as Resource;
  * @uri /Deploy/:organization
  * @uri /Deploy/:organization/:tag
  */
-class Deploy extends Resource{
+class Deploy extends Resource
+{
     public $container;
 
     /**
@@ -28,23 +29,27 @@ class Deploy extends Resource{
      * @method POST
      * @provides text/json
      */
-    function post($organization) {
-
-       $postData = json_decode($this->request->data);
+    public function post($organization)
+    {
+        $postData = json_decode($this->request->data);
 
         $env = $postData->env;
         $org= $postData->organization;
         $tag = $postData->tag;
 
-
-       $deployCmd = '/usr/local/bin/php ' . $this->container['backend_location'] . "/tools/installTest.php -d -b {$tag} -e {$env} -o {$organization}";
+        $deployCmd = '/usr/local/bin/php ' .
+                        $this->container['backend_location'] .
+                        "/tools/installTest.php -d -b {$tag} -e {$env} -o {$organization}";
         $outputfile = '/dev/null';
         $pidfile = '/tmp/pid_deploy';
 
-        exec(sprintf("%s > %s 2>&1 & echo $! >> %s", $deployCmd, $outputfile, $pidfile));
+        $finalCmd = sprintf("%s > %s 2>&1 & echo $! >> %s", $deployCmd, $outputfile, $pidfile);
+
+        $finalCmd;
+        exec($finalCmd);
 
 
-        return json_encode(array('status'=>'Started'));
+        return json_encode(array('status'=>"started"));
     }
 
 
@@ -55,8 +60,9 @@ class Deploy extends Resource{
      * @method GET
      * @provides text/json
      */
-    function get($organization, $tag){
-        $tag =     str_replace('_','.',$tag);
+    public function get($organization, $tag)
+    {
+        $tag =     str_replace('_', '.', $tag);
 
         $memcache = new \Memcache();
         $memcache->connect('localhost', 11211) or die ("Could not connect");
@@ -64,11 +70,10 @@ class Deploy extends Resource{
         $progressKey = 'deploying_' . strtolower($organization . $tag)  . '_progress';
         $progress = $memcache->get($progressKey);
 
-        if($progress['progress'] === false){
+        if ($progress['progress'] === false) {
             $progress['progress'] = 0;
         }
 
         return json_encode(array('progress'=>$progress['progress'], 'detail'=>$progress['detail']));
     }
-
 }
