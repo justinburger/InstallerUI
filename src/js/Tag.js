@@ -28,6 +28,8 @@ Tag.prototype = {
      * @param org
      */
     tagOrganization: function(org){
+        this.initTaggingProgressBar();
+
         jQuery.ajax('Tag/'+org,{
             type:'POST',
             headers: {
@@ -45,8 +47,8 @@ Tag.prototype = {
                 },
                 200: function(data) {
                     dw.Tag.setVersion(data.tag);
+
                     jQuery('#tagging_version_lbl').html(dw.Tag.getVersion());
-                    dw.Tag.initTaggingProgressBar(dw.Tag.getVersion());
 
                 }}
         });
@@ -64,18 +66,16 @@ Tag.prototype = {
     /**
      * Start polling for tagging progress updates.
      */
-    initTaggingProgressBar: function(tag){
-        this.getTaggingProgressUpdate(tag);
+    initTaggingProgressBar: function(){
+        this.getTaggingProgressUpdate(true);
     },
 
     /**
      * Called via poll get update the tagging progress bar.
      */
-        getTaggingProgressUpdate: function(tag){
-        var tag_uri_encoded = tag+"";
-        tag_uri_encoded = tag_uri_encoded.replace(".", "_");
+        getTaggingProgressUpdate: function(first){
 
-        jQuery.ajax('Tag/'+dw.Organization.getName() + '/' +  tag_uri_encoded,{
+        jQuery.ajax('Tag/'+dw.Organization.getName(),{
             type:'GET',
             headers: {
                 Accept : "text/json",
@@ -88,11 +88,18 @@ Tag.prototype = {
                     alert("page not found");
                 },
                 200: function(data) {
+                    dw.Tag.setVersion(data.version);
+                    jQuery('#tagging_version_lbl').html(dw.Tag.getVersion());
+                    jQuery('#tagging_details_lbl').html(data.detail);
                     jQuery('#tagging_progress').children('.bar').css('width',data.progress+'%');
                     jQuery('#step3_next_btn').show();
 
-                    if(data.progress < 100){
-                        setTimeout('dw.Tag.getTaggingProgressUpdate()', 1000);
+                    if(data.progress < 100 || first == true){
+                        first = false;
+                        if (data.progress >=100 && first == true){
+                            first = true;
+                        }
+                        setTimeout('dw.Tag.getTaggingProgressUpdate('+first+')', 1000);
                     }
 
                 }}

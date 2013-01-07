@@ -35,6 +35,12 @@ class Tag extends Resource
          * 3. return it.
          */
 
+        $memcache = new \Memcache();
+        $memcache->connect('localhost', 11211) or die ("Could not connect");
+
+        $progressKey = 'tagging_' . strtolower($organization)  . '_progress';
+        $memcache->set($progressKey,array('progress'=>0,'detail'=>'Waiting to start..', 'version'=>'?'));
+
         $tagCmd = '/usr/local/bin/php ' .
                     $this->container['backend_location'] .
                     "/tools/installTest.php --tag -o {$organization}";
@@ -63,16 +69,14 @@ class Tag extends Resource
      * @method GET
      * @provides text/json
      */
-    public function get($organization, $tag)
+    public function get($organization)
     {
-        $tag =  str_replace('_', '.', $tag);
-
         $memcache = new \Memcache();
         $memcache->connect('localhost', 11211) or die ("Could not connect");
 
-        $progressKey = 'tagging_' . strtolower($organization . $tag)  . '_progress';
+        $progressKey = 'tagging_' . strtolower($organization)  . '_progress';
         $progress = $memcache->get($progressKey);
 
-        return json_encode(array('progress'=>$progress));
+        return json_encode($progress);
     }
 }
