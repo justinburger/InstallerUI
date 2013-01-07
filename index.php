@@ -29,8 +29,6 @@ if(MOCK){
         return new InstallerUI\Data\Mock\Organization();
     };
 
-
-
     $container['consoleLog'] = function ($c) {
         return new InstallerUI\Data\Mock\ConsoleLog();
     };

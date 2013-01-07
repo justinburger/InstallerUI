@@ -37,12 +37,16 @@ class Tag extends Resource
 
         $tagCmd = '/usr/local/bin/php ' .
                     $this->container['backend_location'] .
-                    "/tools/installTest.php --tag -o {$organization} &";
+                    "/tools/installTest.php --tag -o {$organization}";
 
         $outputfile = '/dev/null';
         $pidfile = '/tmp/pid_deploy_tag';
 
-        exec(sprintf("%s > %s 2>&1 & echo $! >> %s", $tagCmd, $outputfile, $pidfile));
+        $finalCmd = sprintf("%s > %s 2>&1 & echo $! >> %s", $tagCmd, $outputfile, $pidfile);
+
+        exec($finalCmd);
+
+        sleep(15);
 
 
         $memcache = new \Memcache();
@@ -51,7 +55,7 @@ class Tag extends Resource
         $tag = $memcache->get('tagging_' . strtolower($organization) . '_tag');
         $tag = (is_null($tag)) ? '?' : $tag;
 
-        return json_encode(array('tag'=>$tag, 'cmd'=>$tagCmd));
+        return json_encode(array('tag'=>$tag, 'cmd'=>$finalCmd));
     }
 
 

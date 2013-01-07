@@ -19,6 +19,7 @@ Deploy.prototype = {
         org = dw.Organization.getName();
         version = dw.Tag.getVersion();
         environment = jQuery('#step4_organization_list').children('.btn-group button.active').html()
+        dw.environment = environment;
         jQuery.ajax('Deploy/'+org,{
             type:'POST',
             headers: {
@@ -46,15 +47,15 @@ Deploy.prototype = {
 
 
     initDeployPaneProgressPolling: function(){
-        this.getDeployPaneProgress();
+        this.getDeployPaneProgress(true);
     },
 
 
-     getDeployPaneProgress: function(){
+     getDeployPaneProgress: function(first){
         var tag_uri_encoded = dw.Tag.getVersion()+"";
         tag_uri_encoded = tag_uri_encoded.replace(".", "_");
 
-        jQuery.ajax('Deploy/'+dw.Organization.getName() + '/' +  tag_uri_encoded,{
+        jQuery.ajax('Deploy/'+dw.Organization.getName() + '/' +  tag_uri_encoded + '/' + dw.environment,{
             type:'GET',
             headers: {
                 Accept : "text/json",
@@ -70,8 +71,12 @@ Deploy.prototype = {
                     jQuery('#step5_progress_details').html(data.detail);
                     jQuery('#step5_progress').children('.bar').css('width',data.progress+'%');
 
-                    if(data.progress < 100){
-                        setTimeout('dw.Deploy.getDeployPaneProgress()', 1000);
+                    if(data.progress < 100 || first == true){
+                        first = false;
+                        if(data.progress >= 100 && first == true){
+                            first = true;
+                        }
+                        setTimeout('dw.Deploy.getDeployPaneProgress('+first+')', 1000);
                     }
 
                 }}

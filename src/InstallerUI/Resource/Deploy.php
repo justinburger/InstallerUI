@@ -17,6 +17,7 @@ use \Tonic\Resource as Resource;
  * @uri /Deploy
  * @uri /Deploy/:organization
  * @uri /Deploy/:organization/:tag
+ * @uri /Deploy/:organization/:tag/:env
  */
 class Deploy extends Resource
 {
@@ -36,6 +37,13 @@ class Deploy extends Resource
         $env = $postData->env;
         $org= $postData->organization;
         $tag = $postData->tag;
+
+        $memcache = new \Memcache();
+        $memcache->connect('localhost', 11211) or die ("Could not connect");
+
+        $progressKey = 'deploying_' . strtolower($org . $tag.$env)  . '_progress';
+        $progress = $memcache->set($progressKey,array('progress'=>1,'detail'=>'Waiting for backend to start...'));
+
 
         $deployCmd = '/usr/local/bin/php ' .
                         $this->container['backend_location'] .
@@ -60,14 +68,14 @@ class Deploy extends Resource
      * @method GET
      * @provides text/json
      */
-    public function get($organization, $tag)
+    public function get($organization, $tag, $env)
     {
         $tag =     str_replace('_', '.', $tag);
 
         $memcache = new \Memcache();
         $memcache->connect('localhost', 11211) or die ("Could not connect");
 
-        $progressKey = 'deploying_' . strtolower($organization . $tag)  . '_progress';
+        $progressKey = 'deploying_' . strtolower($organization . $tag.$env)  . '_progress';
         $progress = $memcache->get($progressKey);
 
         if ($progress['progress'] === false) {

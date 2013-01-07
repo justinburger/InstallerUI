@@ -13,4 +13,11 @@ TO DO
 * Better polling: Polling of progress bars needs improvement to use memory and ajax calls more efficiently.
 * Better setup process: Right now, the user has to change the point-to location within the install code. This should be changed to an external config.
 * Permission support: Need to have some sort of authenication process. Hopefully using Github.
+* (done 12/17/2012) More information during download portion of deployment.
+* More information whilst tagging.
+* Deal with issue where progress bar already shows 100%.
+* add a log of deployments for each env.
+
+
+
 

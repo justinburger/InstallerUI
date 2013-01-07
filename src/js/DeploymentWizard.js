@@ -130,6 +130,7 @@ DeploymentWizard.prototype = {
             }
         }else if(to ==5){
             environment = jQuery('#step4_organization_list').children('.btn-group button.active').html();
+            dw.environment = environment;
 
             if(environment == '' || environment == undefined){
                 jQuery('#step4_organization_list').tooltip('show')
